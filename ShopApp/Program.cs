@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopApp.Data;
+using ShopApp.Services.CategoryService;
 using System;
 
 
@@ -18,6 +19,8 @@ builder.Services.AddDefaultIdentity<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

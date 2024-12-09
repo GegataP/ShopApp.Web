@@ -25,6 +25,16 @@ namespace ShopApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // adds admin and user roles
+            modelBuilder.Entity<IdentityRole>().HasData(
+                    new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() },
+                         new IdentityRole
+                        {
+                             Name = "Administrator",
+                            NormalizedName = "Administrator".ToUpper()
+                            });
+
+
             // User Constraints
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
