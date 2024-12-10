@@ -19,7 +19,9 @@ builder.Services.AddDefaultIdentity<User>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
+    
 
 //controllers services
 builder.Services.AddTransient<ICategoryService, CategoryService>();
@@ -46,6 +48,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.MapControllerRoute(
+      name: "Dashboard",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
+
 
 app.MapControllerRoute(
     name: "default",
