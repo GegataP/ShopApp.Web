@@ -7,28 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopApp.Data;
-using ShopApp.Services.CategoryService;
+using ShopApp.Services.ProductService;
 
 namespace ShopApp.Controllers
 {
-    public class CategoryController : Controller
+    public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
 
-        public CategoryController(ApplicationDbContext context, ICategoryService categoryService)
+        public ProductController(ApplicationDbContext context, IProductService productService)
         {
             _context = context;
-            _categoryService = categoryService;
+            _productService = productService;
         }
 
-        // GET: Category
+        // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var applicationDbContext = _context.Products.Include(p => p.Category);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Category/Details/5
+        // GET: Product/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -36,41 +37,47 @@ namespace ShopApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var product = await _context.Products
+                .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(product);
         }
 
-        // GET: Category/Create
+        // GET: Product/Create
         [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
-        // POST: Category/Create
+        // POST: Product/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Id")] Category category)
+        public async Task<IActionResult> Create([Bind("Name,Price,Description,ImageUrl,CategoryId,Id")] Product product)
         {
             if (ModelState.IsValid)
             {
-                category.Id = Guid.NewGuid();
-                // create service
-                _categoryService.Create(category);
+                product.Id = Guid.NewGuid();
+                //create product services
+                _productService.Create(product);
+
+                //_context.Add(product);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
         }
 
-        // GET: Category/Edit/5
+        // GET: Product/Edit/5
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -79,22 +86,23 @@ namespace ShopApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(category);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
         }
 
-        // POST: Category/Edit/5
+        // POST: Product/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] Category category)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Price,Description,ImageUrl,CategoryId,Id")] Product product)
         {
-            if (id != category.Id)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -103,14 +111,14 @@ namespace ShopApp.Controllers
             {
                 try
                 {
-                    // update and saves changes service 
-                    _categoryService.Edit(category);
-                    //_context.Update(category);
+                    // edit and save changes service
+                    _productService.Edit(product);
+                    //_context.Update(product);
                     //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -121,10 +129,11 @@ namespace ShopApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
         }
 
-        // GET: Category/Delete/5
+        // GET: Product/Delete/5
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -133,35 +142,36 @@ namespace ShopApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var product = await _context.Products
+                .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(product);
         }
 
-        // POST: Category/Delete/5
+        // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
             {
-                //delete category services
-                _categoryService?.Delete(category);
+                //delete product service
+                _productService.Delete(product);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(Guid id)
+        private bool ProductExists(Guid id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

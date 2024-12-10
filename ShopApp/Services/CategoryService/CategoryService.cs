@@ -12,10 +12,27 @@ namespace ShopApp.Services.CategoryService
             this.applicationDbContext = applicationDbContext;
         }
 
+        // create category
         public void Create(Category category)
         {
             applicationDbContext.Add(category);
-            applicationDbContext.SaveChangesAsync();
+            applicationDbContext.SaveChanges();
+        }
+
+        //edit category 
+        public void Edit(Category category) 
+        {
+           
+            applicationDbContext.Update(category);
+            applicationDbContext.SaveChanges();
+            
+        }
+
+        //delete category
+        public void Delete(Category category)
+        {
+            applicationDbContext.Remove(category);
+
         }
 
     }
