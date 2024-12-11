@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static ShopApp.Common.EnityValidationConstants.Category;
 
 namespace ShopApp.Data
 {
@@ -8,6 +9,7 @@ namespace ShopApp.Data
             this.Products = new HashSet<Product>();
         }
         [Required]
+        [MaxLength(CategoryNameMaxLength)]
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; }
     }
