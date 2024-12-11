@@ -12,8 +12,8 @@ using ShopApp.Data;
 namespace ShopApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241211075435_Initial")]
-    partial class Initial
+    [Migration("20241211193436_CartUser")]
+    partial class CartUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "10c0c695-55de-4d51-a0dc-cbdffd90a61f",
+                            Id = "a93105f7-2aee-45ec-97d9-a4354514a80b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "98fa44d4-4540-41f8-945c-22b6c15955a5",
+                            Id = "0c386ae2-bccc-408c-967b-7fe62333d9c1",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -182,18 +182,23 @@ namespace ShopApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrderProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderProductId");
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Carts");
                 });
@@ -370,9 +375,17 @@ namespace ShopApp.Migrations
                 {
                     b.HasOne("ShopApp.Data.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("OrderProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShopApp.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShopApp.Data.Product", b =>

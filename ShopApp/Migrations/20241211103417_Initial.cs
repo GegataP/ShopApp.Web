@@ -198,17 +198,18 @@ namespace ShopApp.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_Products_OrderProductId",
-                        column: x => x.OrderProductId,
+                        name: "FK_Carts_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -216,8 +217,8 @@ namespace ShopApp.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "10c0c695-55de-4d51-a0dc-cbdffd90a61f", null, "User", "USER" },
-                    { "98fa44d4-4540-41f8-945c-22b6c15955a5", null, "Administrator", "ADMINISTRATOR" }
+                    { "2b9bbf9f-edad-44ec-9256-869935acc37d", null, "User", "USER" },
+                    { "e6a8671e-d19d-4134-824e-3521dc305a80", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -267,9 +268,9 @@ namespace ShopApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_OrderProductId",
+                name: "IX_Carts_ProductId",
                 table: "Carts",
-                column: "OrderProductId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
