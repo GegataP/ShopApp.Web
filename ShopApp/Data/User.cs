@@ -4,7 +4,7 @@ namespace ShopApp.Data
 {
     public class User : IdentityUser
     {
-        public ICollection<Order> Orders { get; set; }
+        //public ICollection<Order> Orders { get; set; }
 
     }
 }

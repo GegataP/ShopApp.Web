@@ -6,16 +6,12 @@ namespace ShopApp.Data
     public class Cart : BaseModel
     {
         [Required]
-        public Guid OrderProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         
         [ForeignKey("OrderProductId")]
-        public OrderProduct OrderProduct { get; set; }
+        public Product Product { get; set; }
 
-        [Required]
-        public Guid UserID { get; set; }
-
-        [ForeignKey("UserID")]
-        public User User { get; set; }
+        public int Quantity { get; set; }
     }
 }

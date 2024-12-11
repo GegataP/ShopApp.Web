@@ -9,8 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using ShopApp.Data;
 using ShopApp.Services.CategoryService;
 
-namespace ShopApp.Controllers
+namespace ShopApp.Areas.Dashboard.Controllers
 {
+    [Area("Dashboard")]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;

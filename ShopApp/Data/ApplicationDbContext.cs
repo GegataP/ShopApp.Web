@@ -18,8 +18,9 @@ namespace ShopApp.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<Cart> Carts { get; set; } 
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,21 +48,21 @@ namespace ShopApp.Data
                 .HasForeignKey(p => p.CategoryId);
 
             // Order-User Relationship
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany()
-                .HasForeignKey(o => o.UserId);
-
-            // OrderItem Relationships
-            modelBuilder.Entity<OrderProduct>()
-                .HasOne(oi => oi.Order)
-                .WithMany(o => o.OrderProducts)
-                .HasForeignKey(oi => oi.OrderId);
-
-            modelBuilder.Entity<OrderProduct>()
-                .HasOne(oi => oi.Product)
-                .WithMany()
-                .HasForeignKey(oi => oi.ProductId);
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.User)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.UserId);
+            //
+            //// OrderItem Relationships
+            //modelBuilder.Entity<OrderProduct>()
+            //    .HasOne(oi => oi.Order)
+            //    .WithMany(o => o.OrderProducts)
+            //    .HasForeignKey(oi => oi.OrderId);
+            //
+            //modelBuilder.Entity<OrderProduct>()
+            //    .HasOne(oi => oi.Product)
+            //    .WithMany()
+            //    .HasForeignKey(oi => oi.ProductId);
 
 
             //seeding data;
