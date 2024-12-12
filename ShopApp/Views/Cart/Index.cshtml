@@ -1,4 +1,6 @@
-﻿
+﻿@using ShopApp.Data
+@model List<Cart>
+
 <link rel="stylesheet" href="~/css/cart.css">
 
 
@@ -8,71 +10,122 @@
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                    <div class="col align-self-center text-right text-muted">3 items</div>
+                   
                 </div>
             </div>
-            <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
+
+            @foreach(var cartItem in Model)
+            {
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="@cartItem.Product.ImageUrl"></div>
+                        <div class="col">
+                            <div class="row ">
+                                <a href="#" class="nav-link">@cartItem.Product.Name</a>
+                            </div>
+                            
+                        </div>
+                        <div class="col">
+
+                            <div class="">
+
+                                @{
+                                    var selectedValue = cartItem.Quantity;
+
+                                    var items = new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Value = "1", Text="1", Selected = (selectedValue ==1)},
+                                        new SelectListItem {Value = "2", Text="2", Selected = (selectedValue ==2)},
+                                        new SelectListItem {Value = "3", Text="3", Selected = (selectedValue ==3)},
+                                        new SelectListItem {Value = "4", Text="4", Selected = (selectedValue ==4)},
+                                        new SelectListItem {Value = "5", Text="5", Selected = (selectedValue ==5)},
+                                        new SelectListItem {Value = "6", Text="6", Selected = (selectedValue ==6)},
+                                        new SelectListItem {Value = "7", Text="7", Selected = (selectedValue ==7)},
+
+                                    };
+                                }
+
+                                <select id="product-@cartItem.ProductId" data-productId="@cartItem.ProductId" style="width: 100px;" class="form-select me-4" onchange="submitCart(@cartItem.ProductId)" asp-items="items">
+                                    
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        
+                        <div class="col">$@cartItem.Product.Price <a asp-controller="Cart" asp-action="Remove" asp-route-id="@cartItem.Id" class="btn btn-light border text-danger icon-hover-danger">Remove</a>
+                            </div>
                     </div>
-                    <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                    </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                    </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
-            </div>
-            <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
-                    <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
-                    </div>
-                    <div class="col">
-                        <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                    </div>
-                    <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                </div>
-            </div>
+            }
+
+            
+
+
             <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
-            <div class="row">
-                <div class="col" style="padding-left:0;">ITEMS 3</div>
-                <div class="col text-right">&euro; 132.00</div>
-            </div>
-            <form>
-                <p>SHIPPING</p>
-                <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
-                <p>GIVE CODE</p>
-                <input id="code" placeholder="Enter your code">
-            </form>
+            
+            
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; 137.00</div>
+                <div class="col text-right">$@ViewBag.TotalCost</div>
             </div>
             <button class="btn">CHECKOUT</button>
         </div>
     </div>
 
 </div>
+
+@section  Scripts{
+    <script>
+
+        function submitCart(productId) {
+            //Get the selected element from the given product Id 
+
+            const selectElement = document.getElementById(`product-${productId}`);
+
+            //Get the selected quantityt and the product ID from the data attribute
+
+            const qty = selectElement.value;
+            const productID = selectElement.getAttribute('data-productId');
+
+            //Create a new form element
+            const form = document.createElement('form');
+
+            form.method = 'GET';
+            form.action = '/Cart/UpdateQty';
+
+            //create hidden input fields for product ID and quantity
+            const productInput = document.createElement('input');
+            productInput.type = 'hidden';
+            productInput.name = 'productId';
+            productInput.value = productID;
+
+            const qtyInput = document.createElement('input');
+            qtyInput.type = 'hidden';
+            qtyInput.name = 'qty';
+            qtyInput.value = qty;
+
+            //append the hidden fields to the form
+
+            form.appendChild(productInput);
+            form.appendChild(qtyInput);
+
+            //append the form to the document body 
+            document.body.appendChild(form);
+
+            //submit the form
+            form.submit();
+
+        }
+
+    </script>
+
+    
+}
 
 
