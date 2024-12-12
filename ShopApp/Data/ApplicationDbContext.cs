@@ -21,8 +21,10 @@ namespace ShopApp.Data
 
         public DbSet<Address> Addresses { get; set; }
 
-        public DbSet<Cart> Carts { get; set; } 
-       
+        public DbSet<Cart> Carts { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

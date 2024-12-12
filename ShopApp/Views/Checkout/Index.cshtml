@@ -1,7 +1,30 @@
 ﻿@using ShopApp.Data
 @model Address
 
+@{
+    List<Address> addresses = ViewBag.Addresses;
+}
+
 <div class="container">
+
+
+    <div class="row">
+        
+
+            @foreach(var address in addresses)
+            {
+            <div class="col-md-4 mb-2">
+                <div class="card-body">
+                    <h5>@address.User</h5>
+                        <p>@address.AddressLine, @address.City , @address.State - @address.PinCode</p>
+                    <a asp-controller="Checkout" asp-action="Confirm" asp-route-addressId="@address.Id" class="btn btn-primary">Deliver here</a>
+                </div>
+            </div>
+            }
+
+       
+    </div>
+
     <form asp-action="Index">
         <div asp-asp-validation-summary="ModelOnly" class="text-danger"></div>
 
