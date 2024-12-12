@@ -34,7 +34,42 @@ namespace ShopApp.Controllers
 
         public async Task<IActionResult> Confirm(Guid addressId)
         {
-            return View();
+            
+
+            var address = await _context.Addresses.Where(x=> x.Id== addressId).FirstOrDefaultAsync();
+
+            if (address == null) 
+            {
+                return BadRequest();
+            }
+
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            decimal orderCost = 0;
+
+            var carts = await _context.Carts
+                .Include(x => x.Product)
+                .Where(x=>x.UserId != Guid.Parse(currentUser.Id))
+                .ToListAsync();
+
+            foreach (var cart in carts) 
+            {
+                orderCost += (cart.Product.Price * cart.Quantity);
+            }
+
+            var order = new Order
+            {
+                AddressId = addressId,
+                CreatedAt = DateTime.Now,
+                Status = "Order Placed",
+                UserId = Guid.Parse(currentUser.Id),
+                Amount = orderCost,
+            };
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Thank you!");
         }
 
         [HttpPost]

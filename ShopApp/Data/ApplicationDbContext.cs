@@ -25,6 +25,8 @@ namespace ShopApp.Data
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,7 +62,7 @@ namespace ShopApp.Data
             //// OrderItem Relationships
             //modelBuilder.Entity<OrderProduct>()
             //    .HasOne(oi => oi.Order)
-            //    .WithMany(o => o.OrderProducts)
+            //    .WithMany()
             //    .HasForeignKey(oi => oi.OrderId);
             //
             //modelBuilder.Entity<OrderProduct>()
