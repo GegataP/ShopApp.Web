@@ -10,11 +10,11 @@
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                   
+
                 </div>
             </div>
 
-            @foreach(var cartItem in Model)
+            @foreach (var cartItem in Model)
             {
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
@@ -23,7 +23,7 @@
                             <div class="row ">
                                 <a href="#" class="nav-link">@cartItem.Product.Name</a>
                             </div>
-                            
+
                         </div>
                         <div class="col">
 
@@ -33,58 +33,60 @@
                                     var selectedValue = cartItem.Quantity;
 
                                     var items = new List<SelectListItem>
-                                    {
-                                        new SelectListItem {Value = "1", Text="1", Selected = (selectedValue ==1)},
-                                        new SelectListItem {Value = "2", Text="2", Selected = (selectedValue ==2)},
-                                        new SelectListItem {Value = "3", Text="3", Selected = (selectedValue ==3)},
-                                        new SelectListItem {Value = "4", Text="4", Selected = (selectedValue ==4)},
-                                        new SelectListItem {Value = "5", Text="5", Selected = (selectedValue ==5)},
-                                        new SelectListItem {Value = "6", Text="6", Selected = (selectedValue ==6)},
-                                        new SelectListItem {Value = "7", Text="7", Selected = (selectedValue ==7)},
+                            {
+                                    new SelectListItem {Value = "1", Text="1", Selected = (selectedValue ==1)},
+                                    new SelectListItem {Value = "2", Text="2", Selected = (selectedValue ==2)},
+                                    new SelectListItem {Value = "3", Text="3", Selected = (selectedValue ==3)},
+                                    new SelectListItem {Value = "4", Text="4", Selected = (selectedValue ==4)},
+                                    new SelectListItem {Value = "5", Text="5", Selected = (selectedValue ==5)},
+                                    new SelectListItem {Value = "6", Text="6", Selected = (selectedValue ==6)},
+                                    new SelectListItem {Value = "7", Text="7", Selected = (selectedValue ==7)},
 
-                                    };
+                            };
                                 }
 
                                 <select id="product-@cartItem.ProductId" data-productId="@cartItem.ProductId" style="width: 100px;" class="form-select me-4" onchange="submitCart(@cartItem.ProductId)" asp-items="items">
-                                    
                                 </select>
 
                             </div>
 
                         </div>
 
-                        
-                        <div class="col">$@cartItem.Product.Price <a asp-controller="Cart" asp-action="Remove" asp-route-id="@cartItem.Id" class="btn btn-light border text-danger icon-hover-danger">Remove</a>
-                            </div>
+
+                        <div class="col">
+                            $@cartItem.Product.Price <a asp-controller="Cart" asp-action="Remove" asp-route-id="@cartItem.Id" class="btn btn-success border icon-hover-danger">Remove</a>
+                        </div>
                     </div>
                 </div>
             }
 
-            
 
 
-            <div class="back-to-shop"><a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+
+
         </div>
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
-            
-            
+
+
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
                 <div class="col text-right">$@ViewBag.TotalCost</div>
             </div>
-            <button class="btn">CHECKOUT</button>
+            <a asp-controller="Checkout" asp-action="Index" class="btn btn-success w-100 shadow-0 mb-2">CHECKOUT</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100 border mt-2">Back to shop</a>
+
         </div>
     </div>
 
 </div>
 
-@section  Scripts{
+@section  Scripts {
     <script>
 
         function submitCart(productId) {
-            //Get the selected element from the given product Id 
+            //Get the selected element from the given product Id
 
             const selectElement = document.getElementById(`product-${productId}`);
 
@@ -115,7 +117,7 @@
             form.appendChild(productInput);
             form.appendChild(qtyInput);
 
-            //append the form to the document body 
+            //append the form to the document body
             document.body.appendChild(form);
 
             //submit the form
@@ -125,7 +127,7 @@
 
     </script>
 
-    
+
 }
 
 
