@@ -51,13 +51,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "996efdc0-ab59-4ee7-b1d0-b10f1388c379",
+                            Id = "215aa043-8ea0-4540-b2f1-1904e54588eb",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b1dfe30c-aef5-48d4-af49-4d659491b691",
+                            Id = "8dba3550-3641-43d8-8947-a2ba41a6810a",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -293,8 +293,14 @@ namespace ShopApp.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -502,8 +508,8 @@ namespace ShopApp.Migrations
 
             modelBuilder.Entity("ShopApp.Data.OrderProduct", b =>
                 {
-                    b.HasOne("ShopApp.Data.Product", "Order")
-                        .WithMany()
+                    b.HasOne("ShopApp.Data.Order", "Order")
+                        .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -533,6 +539,11 @@ namespace ShopApp.Migrations
             modelBuilder.Entity("ShopApp.Data.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ShopApp.Data.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

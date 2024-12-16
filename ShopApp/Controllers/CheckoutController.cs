@@ -49,7 +49,7 @@ namespace ShopApp.Controllers
 
             var carts = await _context.Carts
                 .Include(x => x.Product)
-                .Where(x=>x.UserId != Guid.Parse(currentUser.Id))
+                .Where(x=>x.UserId == Guid.Parse(currentUser.Id))
                 .ToListAsync();
 
             foreach (var cart in carts) 
@@ -69,8 +69,27 @@ namespace ShopApp.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Thank you!");
+            foreach (var cart in carts)
+            {
+                var orderProduct = new OrderProduct
+                {
+                    ProductId = cart.ProductId,
+                    OrderId = order.Id,
+                    Price=cart.Product.Price,
+                    Quantity=cart.Quantity,
+                };
+
+                _context.Add(orderProduct);
+                
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Orders");
         }
+
+        
+
+        
 
         [HttpPost]
         public async Task<IActionResult> Index(Address address)

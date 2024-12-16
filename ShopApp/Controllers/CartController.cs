@@ -32,7 +32,7 @@ namespace ShopApp.Controllers
 
             foreach (var cartItem in cart)
             {
-                totalCost += cartItem.Product.Price * cartItem.Quantity;
+                totalCost += (cartItem.Product.Price * cartItem.Quantity);
             }
 
             ViewBag.TotalCost = totalCost;
@@ -40,7 +40,7 @@ namespace ShopApp.Controllers
             return View(cart);
         }
 
-        public async Task<IActionResult> UpdateQty(Guid productId, int qty)
+        public async Task<IActionResult> UpdateQty(Guid productId, int quantity)
         {
             var product = await _context.Products.Where(x => x.Id == productId).FirstOrDefaultAsync();
 
@@ -61,7 +61,7 @@ namespace ShopApp.Controllers
                 return BadRequest();
             }
 
-            cartItem.Quantity = qty;
+            cartItem.Quantity = quantity;
             _context.Carts.Update(cartItem);
             await _context.SaveChangesAsync();
 

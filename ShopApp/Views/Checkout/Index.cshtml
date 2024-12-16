@@ -15,7 +15,7 @@
             {
             <div class="col-md-4 mb-2">
                 <div class="card-body">
-                    <h5>@address.User</h5>
+                    @* <h5>@address.User</h5>*@
                         <p>@address.AddressLine, @address.City , @address.State - @address.PinCode</p>
                     <a asp-controller="Checkout" asp-action="Confirm" asp-route-addressId="@address.Id" class="btn btn-primary">Deliver here</a>
                 </div>
