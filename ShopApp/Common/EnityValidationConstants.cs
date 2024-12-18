@@ -2,6 +2,13 @@
 {
     public static class EnityValidationConstants
     {
+        public class User
+        {
+            public const int UserFirstNameMaxLength = 350;
+            public const int UserLastNameMaxLength = 350;
+            
+        }
+
         public  class Product
         {
             public const int ProductNameMaxLength = 150;

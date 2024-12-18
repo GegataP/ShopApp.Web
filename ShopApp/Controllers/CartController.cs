@@ -72,28 +72,27 @@ namespace ShopApp.Controllers
         public async Task<IActionResult> AddToCart(Guid productId, int quantity = 1)
         {
 
-            var currentUser=await _userManager.GetUserAsync(HttpContext.User);
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
             var product = await _context.Products.Where(x => x.Id == productId).FirstOrDefaultAsync();
 
             if (product == null)
             {
-                return BadRequest();
+                return BadRequest(); 
             }
 
-            
-
-            var cart = new Cart {
-                ProductId = productId, 
-                Quantity = quantity, 
+            var cart = new Cart
+            {
+                ProductId = productId,
+                Quantity = quantity,
                 UserId = Guid.Parse(currentUser.Id)
             };
 
             // for service
             _context.Add(cart);
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Remove(Guid id)

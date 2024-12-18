@@ -51,13 +51,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "215aa043-8ea0-4540-b2f1-1904e54588eb",
+                            Id = "82b7bdf6-7102-47ed-9e61-92a46a39686f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8dba3550-3641-43d8-8947-a2ba41a6810a",
+                            Id = "d3fd33b9-ead8-45b6-a9cf-67639dd76dc2",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -193,6 +193,9 @@ namespace ShopApp.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserFullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -361,6 +364,16 @@ namespace ShopApp.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

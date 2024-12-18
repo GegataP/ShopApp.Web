@@ -7,6 +7,8 @@ namespace ShopApp.Data
     {
         public Guid UserId { get; set; }
 
+        public string UserFullName { get; set; }
+
        
         public User User { get; set; }
 

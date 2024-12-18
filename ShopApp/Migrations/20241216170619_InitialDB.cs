@@ -32,6 +32,8 @@ namespace ShopApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -91,6 +93,7 @@ namespace ShopApp.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     AddressLine = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -300,8 +303,8 @@ namespace ShopApp.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "215aa043-8ea0-4540-b2f1-1904e54588eb", null, "User", "USER" },
-                    { "8dba3550-3641-43d8-8947-a2ba41a6810a", null, "Administrator", "ADMINISTRATOR" }
+                    { "82b7bdf6-7102-47ed-9e61-92a46a39686f", null, "User", "USER" },
+                    { "d3fd33b9-ead8-45b6-a9cf-67639dd76dc2", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
