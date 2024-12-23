@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopApp.Data;
 
@@ -11,9 +12,11 @@ using ShopApp.Data;
 namespace ShopApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219152751_InitialDB")]
+    partial class InitialDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "114c507a-c1a4-408a-8bcb-b94727b0c112",
+                            Id = "d0973fbe-19f7-4469-b2fd-f0639f20a87a",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "bbfd32a7-935b-4d60-9718-127cff268cb5",
+                            Id = "fadb6320-cf7d-4d7f-b64a-10152cd3d151",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -196,7 +199,6 @@ namespace ShopApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserFullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -353,9 +355,8 @@ namespace ShopApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
-                        .HasMaxLength(550)
-                        .HasColumnType("nvarchar(550)");
+                    b.Property<string>("Iamge")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

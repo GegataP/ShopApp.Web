@@ -2,35 +2,53 @@
 @model Address
 
 @{
-    List<Address> addresses = ViewBag.Addresses;
+    IList<Address> addresses = ViewBag.Addresses;
 }
+
+
 
 <div class="container">
 
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <p class="display-4 ">Choose where to deliver your purchases</p>
+            </div>
+        </div>
+    </header>
 
     <div class="row">
-        
 
-            @foreach(var address in addresses)
-            {
+        @if (addresses != null)
+        {
+
+        @foreach (var address in addresses)
+        {
             <div class="col-md-4 mb-2">
                 <div class="card-body">
-                    @* <h5>@address.User</h5>*@
-                        <p>@address.AddressLine, @address.City , @address.State - @address.PinCode</p>
+                     <h5>@address.UserFullName</h5>
+                    <p>@address.AddressLine, @address.City , @address.State - @address.PinCode</p>
                     <a asp-controller="Checkout" asp-action="Confirm" asp-route-addressId="@address.Id" class="btn btn-primary">Deliver here</a>
                 </div>
             </div>
-            }
+        }
+        }
 
-       
     </div>
 
     <form asp-action="Index">
         <div asp-asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
+            <label asp-for="UserFullName" class="control-label"></label>
+            <input asp-for="UserFullName" class="form-control" />
+            <span asp-validation-for="UserFullName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
             <label asp-for="AddressLine" class="control-label"></label>
-            <input asp-for="AddressLine" class="form-control"/>
+            <input asp-for="AddressLine" class="form-control" />
             <span asp-validation-for="AddressLine" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -51,8 +69,7 @@
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
-        
-    </form>    
+
+    </form>
 </div>
 
- 

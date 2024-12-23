@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopApp.Data;
 
@@ -11,9 +12,11 @@ using ShopApp.Data;
 namespace ShopApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219162138_SliderImgTwo")]
+    partial class SliderImgTwo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "114c507a-c1a4-408a-8bcb-b94727b0c112",
+                            Id = "800fb146-88b0-4784-8588-3a3dd8055c67",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "bbfd32a7-935b-4d60-9718-127cff268cb5",
+                            Id = "9a6f28ef-c3c9-427f-9a02-f1a3d62a3899",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -353,7 +356,7 @@ namespace ShopApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Iamge")
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
 

@@ -20,11 +20,21 @@ namespace ShopApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Products.ToListAsync();
+            //var products = await _context.Products.ToListAsync();
 
-            var model = new HomeViewModel { Products = products };
+            var sliderImages = await _context.SliderImages
+                .OrderBy(x=>x.SortedOrder)
+                .ToListAsync();
 
-            return View(model);
+            var categories = await _context.Categories.ToListAsync();
+
+            var model = new HomeViewModel { 
+                //Products = products,
+                SliderImages = sliderImages,
+                Categories = categories
+            };
+
+            return View("~/Views/Home/Index.cshtml", model);
         }
 
         public IActionResult Privacy()

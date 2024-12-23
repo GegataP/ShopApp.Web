@@ -24,5 +24,11 @@
             public const int CategoryNameMaxLength = 100;
 
         }
+
+        public class SliderImg
+        {
+            public const int SliderImgUrlMaxLength = 550;
+
+        }
     }
 }

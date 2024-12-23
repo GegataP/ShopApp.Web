@@ -7,13 +7,14 @@ namespace ShopApp.Data
     {
         public Guid UserId { get; set; }
 
+        [Required]
         public string UserFullName { get; set; }
 
-       
+        
         public User User { get; set; }
 
         [Required]
-        public string AddressLine { get; set; }
+        public string AddressLine { get; set; } 
 
         [Required]
         public string City { get; set; }

@@ -28,7 +28,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><a asp-controller="Products" asp-action="Index" class="dropdown-item" >All Products</a></li>
                             
                         </ul>
                     </li>
@@ -46,15 +46,10 @@
         </div>
     </nav>
 
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Better than Temu!</h1>
-                <p class="lead fw-normal text-white-50 mb-0">eventually</p>
-            </div>
-        </div>
-    </header>
+
+    @await RenderSectionAsync("PageTitle", required: false)
+
+    
 
     <div class="container">
         <main role="main" class="pb-3">

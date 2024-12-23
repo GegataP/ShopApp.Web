@@ -67,6 +67,20 @@ namespace ShopApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SliderImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Iamge = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortedOrder = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SliderImages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -303,8 +317,8 @@ namespace ShopApp.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "82b7bdf6-7102-47ed-9e61-92a46a39686f", null, "User", "USER" },
-                    { "d3fd33b9-ead8-45b6-a9cf-67639dd76dc2", null, "Administrator", "ADMINISTRATOR" }
+                    { "d0973fbe-19f7-4469-b2fd-f0639f20a87a", null, "User", "USER" },
+                    { "fadb6320-cf7d-4d7f-b64a-10152cd3d151", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -417,6 +431,9 @@ namespace ShopApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderProducts");
+
+            migrationBuilder.DropTable(
+                name: "SliderImages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

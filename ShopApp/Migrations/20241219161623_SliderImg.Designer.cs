@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopApp.Data;
 
@@ -11,9 +12,11 @@ using ShopApp.Data;
 namespace ShopApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219161623_SliderImg")]
+    partial class SliderImg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "114c507a-c1a4-408a-8bcb-b94727b0c112",
+                            Id = "05190b63-737c-4ad9-8e94-2f2a50ca2fe0",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "bbfd32a7-935b-4d60-9718-127cff268cb5",
+                            Id = "a99c982f-1f64-405a-9a4b-6d0705fb27ba",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -353,11 +356,12 @@ namespace ShopApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
-                        .HasMaxLength(550)
-                        .HasColumnType("nvarchar(550)");
+                    b.Property<string>("Iamge")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortedOrder")

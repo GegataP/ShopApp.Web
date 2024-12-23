@@ -12,8 +12,8 @@ using ShopApp.Data;
 namespace ShopApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241216170619_InitialDB")]
-    partial class InitialDB
+    [Migration("20241219163424_Slider")]
+    partial class Slider
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace ShopApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "82b7bdf6-7102-47ed-9e61-92a46a39686f",
+                            Id = "114c507a-c1a4-408a-8bcb-b94727b0c112",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "d3fd33b9-ead8-45b6-a9cf-67639dd76dc2",
+                            Id = "bbfd32a7-935b-4d60-9718-127cff268cb5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -199,6 +199,7 @@ namespace ShopApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserFullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -347,6 +348,27 @@ namespace ShopApp.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ShopApp.Data.SliderImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(550)
+                        .HasColumnType("nvarchar(550)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortedOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SliderImages");
                 });
 
             modelBuilder.Entity("ShopApp.Data.User", b =>

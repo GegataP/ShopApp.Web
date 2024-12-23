@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ShopApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
@@ -27,6 +28,8 @@ namespace ShopApp.Data
 
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
+        public DbSet<SliderImage> SliderImages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +44,7 @@ namespace ShopApp.Data
                             NormalizedName = "Administrator".ToUpper()
                             });
 
+            
 
             // User Constraints
             modelBuilder.Entity<User>()

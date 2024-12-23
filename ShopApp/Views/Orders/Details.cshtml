@@ -10,9 +10,7 @@
                     <div class="card-body">
                         <div class="top-status">
                             <h5>ORDER# @Model.Id</h5>
-                            <div>Adress:</div>
                             
-                            <p>Lorem</p>
                         </div>
 
                         <div>
@@ -33,7 +31,7 @@
                     <table class="table mb-0">
                         <thead>
                             <tr>
-                                <th scope="col">Product Image</th>
+                                <th scope="col">Product</th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
@@ -57,6 +55,7 @@
                                     <td>
                                         <a asp-controller="Products" asp-action="Details" asp-route-id="@orderProduct.ProductId"></a>
                                     </td>
+                                    
                                     <td>$@orderProduct.Price</td>
                                     <td>@orderProduct.Quantity</td>
                                     <td><strong>$@(orderProduct.Price * @orderProduct.Quantity) </strong></td>

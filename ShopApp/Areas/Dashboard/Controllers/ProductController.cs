@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopApp.Data;
 using ShopApp.Services.ProductService;
 
-namespace ShopApp.Controllers
+namespace ShopApp.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
     public class ProductController : Controller
@@ -60,7 +60,7 @@ namespace ShopApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product, IFormFile Image)
         {
-            if (Image == null) 
+            if (Image == null)
             {
                 ModelState.AddModelError(nameof(Product.ImageUrl), "Image is required.");
                 return View(product);
@@ -68,7 +68,7 @@ namespace ShopApp.Controllers
 
             var imageName = Guid.NewGuid() + Path.GetExtension(Image.FileName);
 
-            if(Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products")))
+            if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products")))
             {
                 Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/Products"));
             }
@@ -131,10 +131,10 @@ namespace ShopApp.Controllers
             {
                 try
                 {
-                    var oldProduct = await _context.Products.FirstOrDefaultAsync(x=>x.Id == id);
+                    var oldProduct = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
 
 
-                    if (Image != null) 
+                    if (Image != null)
                     {
                         var imageName = Guid.NewGuid() + Path.GetExtension(Image.FileName);
 

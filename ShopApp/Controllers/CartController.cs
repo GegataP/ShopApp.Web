@@ -92,7 +92,7 @@ namespace ShopApp.Controllers
             _context.Add(cart);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Products");
         }
 
         public async Task<IActionResult> Remove(Guid id)

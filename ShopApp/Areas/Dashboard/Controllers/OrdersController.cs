@@ -19,9 +19,9 @@ namespace ShopApp.Areas.Dashboard.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Orders
-                
-                .Include(x=>x.OrderProducts)
-                .ThenInclude(x=>x.Product)
+
+                .Include(x => x.OrderProducts)
+                .ThenInclude(x => x.Product)
                 .Include(o => o.Address);
             return View(await applicationDbContext.ToListAsync());
         }
